@@ -39,15 +39,17 @@ export default function Login() {
     /* matching your Register page background and centering */
     <div className="min-h-screen w-full bg-[#1d1d1d] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-[400px] space-y-6">
+
         {/* Logo */}
         <div className="flex justify-start">
            <img src="./src/assets/images/circle app.png" alt="circle" className="h-10 w-auto" />
         </div>
 
+
+        {/* Login form */}
         <h2 className="text-white text-3xl font-bold tracking-tight">
           Login to Circle
         </h2>
-
         <form onSubmit={handleLogin} className="space-y-4">
           <Input
             type="email"
@@ -65,9 +67,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
-
           <Button
             type="submit"
             className="w-full bg-[#04A51E] hover:bg-[#038b18] text-black rounded-full h-12 text-lg font-bold"
@@ -76,13 +76,14 @@ export default function Login() {
           </Button>
         </form>
 
+        {/* Link to register */}
         <p className="text-zinc-400 text-sm">
-          Don't have an account?{" "}
+          Don't have an account yet?{" "}
           <span
             className="text-[#04A51E] cursor-pointer hover:underline"
             onClick={() => navigate('/register')}
           >
-            Register
+            Create Account
           </span>
         </p>
       </div>

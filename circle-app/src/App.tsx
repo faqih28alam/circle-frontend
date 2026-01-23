@@ -1,12 +1,18 @@
-import { BrowserRouter, Link, Routes, Route} from 'react-router-dom'
+// App.tsx
+
+// Import Pages 
 import Register from "./pages/Register"
 import Login from "./pages/Login"
+import Forgot from './pages/Forgot'
+import Reset from './pages/Reset'
+
+// Import UI components
+import { Button } from './components/ui/button'
+
+import './App.css'
+import { BrowserRouter, Link, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthProvider'
 import { useAuth } from './hooks/useAuth'
-
-import { Button } from './components/ui/button'
-import './App.css'
-
 
 //function to separate components & router: 
 //function for components
@@ -51,6 +57,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/reset" element={<Reset />} />
           </Routes>
       </BrowserRouter>
     </AuthProvider>

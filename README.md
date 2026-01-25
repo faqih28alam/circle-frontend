@@ -13,11 +13,49 @@ This is the core API for **Circle**, a high-performance social media platform in
 - npm create vite@latest circle-app -- --template react-ts
 - cd circle-app
 - npm install tailwindcss @tailwindcss/vite
-- update index.css
-- update tsconfig.json
-- update tsconfig.app.json
+- Replace everything in src/index.css with the following:
+
+@import "tailwindcss";
+
+- Edit tsconfig.json file
+
+"compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+}
+
+- Edit tsconfig.app.json file
+
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+    // ...
+
 - npm install -D @types/node
 - update vite.config.ts
+
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+
 - npx shadcn@latest init
 - npm i react-router-dom
 - add src/pages/about.tsx home.tsx postDetail.tsx posts.tsx

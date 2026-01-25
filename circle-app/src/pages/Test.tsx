@@ -1,6 +1,135 @@
-// Register.tsx
-// src/pages/Register.tsx
+// // Test.tsx
+// // src/pages/Test.tsx
 
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// // import { api } from "../services/api";
+
+// // import { useAppDispatch } from "@/store/hooks";
+// // import { setCredentials } from "@/store/authSlice";
+
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import {
+//   Card,
+//   CardContent,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+
+// const Login = () => {
+//   const navigate = useNavigate();
+//   // const dispatch = useAppDispatch();
+
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState<string | null>(null);
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setError(null);
+//     setLoading(true);
+
+//     try {
+//     //   const res = await api.post("/login", { email, password });
+
+//     //   dispatch(
+//     //     setCredentials({
+//     //       user: res.data.data.user,
+//     //       token: res.data.token,
+//     //     })
+//     //   );
+
+//       navigate("/home");
+//     } catch (err: any) {
+//       setError(err.response?.data?.message || "Login failed");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen flex items-center justify-center bg-[#121212]">
+//       <Card className="w-full max-w-sm bg-[#1a1a1a] border-none shadow-lg">
+//         <CardHeader className="space-y-1 text-center">
+//           <p className="text-green-500 font-semibold text-xl">circle</p>
+//           <CardTitle className="text-white text-lg">
+//             Login to Circle
+//           </CardTitle>
+//         </CardHeader>
+
+//         <CardContent>
+//           {error && (
+//             <p className="mb-4 text-sm text-red-500 text-center">
+//               {error}
+//             </p>
+//           )}
+
+//           <form onSubmit={handleSubmit} className="space-y-4">
+//             <div className="space-y-1">
+//               <Label className="text-muted-foreground text-xs">
+//                 Email *
+//               </Label>
+//               <Input
+//                 className="bg-[#121212] border-[#2a2a2a] text-white focus:border-green-500"
+//                 placeholder="Email"
+//                 value={email}
+//                 onChange={(e) => setEmail(e.target.value)}
+//                 required
+//               />
+//             </div>
+
+//             <div className="space-y-1">
+//               <div className="flex justify-between items-center">
+//                 <Label className="text-muted-foreground text-xs">
+//                   Password *
+//                 </Label>
+//                 <button
+//                   type="button"
+//                   className="text-xs text-muted-foreground hover:text-green-500"
+//                 >
+//                   Forgot password?
+//                 </button>
+//               </div>
+
+//               <Input
+//                 type="password"
+//                 className="bg-[#121212] border-[#2a2a2a] text-white focus:border-green-500"
+//                 placeholder="Password"
+//                 value={password}
+//                 onChange={(e) => setPassword(e.target.value)}
+//                 required
+//               />
+//             </div>
+
+//             <Button
+//               type="submit"
+//               disabled={loading}
+//               className="w-full bg-green-500 hover:bg-green-600 text-black font-semibold rounded-full"
+//             >
+//               {loading ? "Logging in..." : "Login"}
+//             </Button>
+//           </form>
+
+//           <p className="mt-4 text-center text-sm text-muted-foreground">
+//             Don’t have an account?{" "}
+//             <button
+//               onClick={() => navigate("/register")}
+//               className="text-green-500 hover:underline"
+//             >
+//               Create account
+//             </button>
+//           </p>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// };
+
+// export default Login;   
+/////////////////////////////////////////////////////////////////
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -94,11 +223,6 @@ export default function Register() {
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               required
             />
-            <Input
-              placeholder="Bio (Optional)"
-              className="bg-[#121212] border-zinc-700 text-white h-12 focus-visible:ring-[#04A51E]"
-              onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-            />
             
             <div className="space-y-2">
                 <Label className="text-zinc-400 text-xs font-medium ml-1">Profile Picture (Optional)</Label>
@@ -116,7 +240,7 @@ export default function Register() {
 
             <Button 
               type="submit"
-              className="w-full bg-[#04A51E] hover:bg-[#038b18] text-black rounded-full h-12 text-lg font-bold mt-2 cursor-pointer"
+              className="w-full bg-[#04A51E] hover:bg-[#038b18] text-black rounded-full h-12 text-lg font-bold mt-2"
             >
               Create
             </Button>

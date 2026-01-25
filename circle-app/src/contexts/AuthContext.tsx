@@ -1,4 +1,5 @@
 // AuthContext.tsx
+// src/contexts/AuthContext.tsx
 
 import { createContext } from "react";
 

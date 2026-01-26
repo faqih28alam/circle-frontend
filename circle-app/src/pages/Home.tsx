@@ -35,7 +35,7 @@ export default function Home() {
       fetchThreads();
   }, []); 
     
-  // Effect 2: Real-time Socket Listeners
+  // Effect 2: Real-time Socket Listeners -> New Thread
   useEffect(() => {
     const handleNewThread = (newThread: Thread) => {
       // Add the new thread to the top
@@ -47,6 +47,25 @@ export default function Home() {
     // Cleanup: Remove listener when component unmounts
     return () => {
       socket.off("newThread", handleNewThread);
+    };
+  }, []);
+
+  // Effect 3: Real-time Socket Listeners -> Update Like
+  useEffect(() => {
+    const handleUpdateLike = (data: { threadId: number; newLikeCount: number }) => {
+      setThreads((prevThreads) =>
+        prevThreads.map((thread) =>
+          thread.id === data.threadId 
+            ? { ...thread, likes_count: data.newLikeCount } 
+            : thread
+        )
+      );
+    };
+
+  socket.on("updateLike", handleUpdateLike);
+
+    return () => {
+      socket.off("updateLike", handleUpdateLike);
     };
   }, []);
 

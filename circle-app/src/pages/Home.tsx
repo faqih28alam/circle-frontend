@@ -1,21 +1,29 @@
-import { useEffect, useState } from 'react';
-import { getThreads } from '@/services/thread-service';
+// Home.tsx
+// src/pages/Home.tsx
+// Page that displays the home page (Sidebar, Feed, Right Sidebar)
+
+import { useState, useEffect } from "react";
+import { getThreads, type Thread } from '@/services/thread-service';
 import ThreadCard from '@/components/features/ThreadCard';
 import Sidebar from '../components/layout/Sidebar';
 import RightBar from '../components/layout/RightBar';
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle } from "lucide-react";
 
 export default function Home() {
-  const [threads, setThreads] = useState([]);
+  const [threads, setThreads] = useState<Thread[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchThreads = async () => {
       try {
+        setLoading(true);
+        setError(null);
         const response = await getThreads();
-        setThreads(response?.data?.threads || []);
+        setThreads(response || []);
       } catch (err) {
         console.error("Error fetching threads", err);
+        setError("Could not load threads. Check your connection.");
       } finally {
         setLoading(false);
       }
@@ -48,8 +56,20 @@ export default function Home() {
               <div className="flex justify-center p-10">
                 <Loader2 className="h-8 w-8 animate-spin text-[#04A51E]" />
               </div>
+            ) : error ? (
+              /* --- ADDED ERROR DISPLAY --- */
+              <div className="flex flex-col items-center justify-center p-10 text-zinc-500">
+                <AlertCircle className="h-10 w-10 text-red-500 mb-2" />
+                <p>{error}</p>
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="mt-4 text-[#04A51E] hover:underline cursor-pointer"
+                >
+                  Try Again
+                </button>
+              </div>
             ) : (
-              threads.map((thread: any) => (
+              threads.map((thread: Thread) => (
                 <ThreadCard key={thread.id} {...thread} />
               ))
             )}

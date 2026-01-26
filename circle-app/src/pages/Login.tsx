@@ -28,9 +28,10 @@ export default function Login() {
         try {
             // Connect to your backend route: http://localhost:3000/auth/login
             const response = await axios.post('http://localhost:3000/auth/login', { email, password });
-
-            // Use the actual token from your backend
-            login(response.data.token);
+            // Access both token and user from the response data
+            const { token, user } = response.data;
+            // Use the actual token from your backend, Pass BOTH to the login function
+            login(token, user);
             alert("Login Successful!");
             // navigate("/");
             navigate("/home"); // Redirect to home/dashboard

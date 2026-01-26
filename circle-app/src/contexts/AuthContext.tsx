@@ -3,9 +3,18 @@
 
 import { createContext } from "react";
 
+export interface User {
+  id: number;
+  username: string;
+  full_name: string;
+  photo_profile?: string;
+  bio?: string;
+}
+
 export type AuthContextType = {
+    user: User | null;
     token: string | null;
-    login: (token: string) => void;
+    login: (token: string, userData: User) => void;
     logout: () => void;
 };
 

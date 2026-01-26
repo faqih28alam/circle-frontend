@@ -7,6 +7,7 @@ import Forgot from './pages/Forgot'
 import Reset from './pages/Reset'
 import Test from './pages/Test'
 import Home from './pages/Home'
+import ThreadDetail from "./pages/ThreadDetailPage"
 
 // Components
 import Header from './components/Header';
@@ -36,8 +37,8 @@ function App() {
             {/* Private Routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/home" element={<Home />} />
-              {/* <Route path="/thread/:id" element={<Thread />} />
-              <Route path="/follows" element={<Follow />} /> */}
+              <Route path="/thread/:id" element={<ThreadDetail />} />
+              {/* <Route path="/follows" element={<Follow />} /> */}
             </Route>
 
             {/* 2. APP ROUTES (With Header) */}

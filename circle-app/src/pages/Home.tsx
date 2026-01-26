@@ -8,27 +8,46 @@ import ThreadCard from '@/components/features/ThreadCard';
 import Sidebar from '../components/layout/Sidebar';
 import RightBar from '../components/layout/RightBar';
 import { Loader2, AlertCircle } from "lucide-react";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
 
 export default function Home() {
   const [threads, setThreads] = useState<Thread[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Effect 1: Fetch initial data
   useEffect(() => {
     const fetchThreads = async () => {
       try {
         setLoading(true);
-        setError(null);
+        // setError(null);
         const response = await getThreads();
-        setThreads(response || []);
-      } catch (err) {
-        console.error("Error fetching threads", err);
-        setError("Could not load threads. Check your connection.");
-      } finally {
-        setLoading(false);
-      }
+        setThreads(response || []);}
+        catch (err) {
+          console.error("Error fetching threads", err);
+          setError("Could not load threads. Check your connection.");
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchThreads();
+  }, []); 
+    
+  // Effect 2: Real-time Socket Listeners
+  useEffect(() => {
+    const handleNewThread = (newThread: Thread) => {
+      // Add the new thread to the top
+      setThreads((prev) => [newThread, ...prev]);
     };
-    fetchThreads();
+
+    socket.on("newThread", handleNewThread);
+
+    // Cleanup: Remove listener when component unmounts
+    return () => {
+      socket.off("newThread", handleNewThread);
+    };
   }, []);
 
   return (

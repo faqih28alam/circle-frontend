@@ -78,6 +78,17 @@ const ThreadCard = (props: any) => {
           
           {/* Show the thread content */}
           <p className="mt-1 text-sm text-zinc-200">{props.content}</p>
+
+          {/* Show Uploaded Post Images */}
+          {props.image && (
+            <div className="mt-3 rounded-xl overflow-hidden border border-zinc-800">
+              <img 
+                src={`${import.meta.env.VITE_URL_AVATAR}/${props.image}`} 
+                alt="post content"
+                className="w-full h-auto max-h-[400px] object-cover"
+              />
+            </div>
+          )}
           
           <div className="flex mt-3 gap-6">
             {/* Interactive Like Section */}

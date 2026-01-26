@@ -6,6 +6,7 @@ import { Home, Search, Heart, User, LogOut } from 'lucide-react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from '@/hooks/useAuth';
+import { CreatePostModal } from '../features/CreatePostModal';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -43,10 +44,14 @@ export default function Sidebar() {
               <span className="text-lg font-semibold">{item.name}</span>
             </Link>
           ))}
-          
-          <Button className="w-full bg-[#04A51E] hover:bg-[#038a19] text-white rounded-full py-6 mt-4 text-lg font-bold cursor-pointer">
-            Create Post
-          </Button>
+
+          {/* Create Post button */}
+          <CreatePostModal onPostSuccess={() => window.location.reload()}> 
+              <Button className="w-full bg-[#04A51E] hover:bg-[#038a19] text-white rounded-full py-6 mt-4 text-lg font-bold cursor-pointer">
+                Create Post
+              </Button>
+          </CreatePostModal>
+
         </nav>
       </div>
 

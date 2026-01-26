@@ -8,8 +8,11 @@ import { ArrowLeft } from "lucide-react";
 import { api } from "@/services/api";
 import ThreadCard from "@/components/features/ThreadCard";
 import { ReplyModal } from "@/components/features/ReplyModal";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useAuth } from '@/hooks/useAuth';
 
 export default function ThreadDetail() {
+  const { user } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const [thread, setThread] = useState<any>(null);
@@ -54,7 +57,13 @@ export default function ThreadDetail() {
       <div className="p-4 border-b border-zinc-800">
         <ReplyModal threadId={Number(id)} onSuccess={fetchData}>
            <div className="flex items-center gap-3 cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-zinc-800" />
+              {/* Dynamic User Profile Picture */}
+              <Avatar className="">
+                <AvatarImage 
+                src={`${import.meta.env.VITE_URL_AVATAR}/${user?.photo_profile}`} />
+                <AvatarFallback>{user?.full_name?.[0] || '?'}</AvatarFallback>
+              </Avatar>
+
               <span className="text-zinc-500">Type your reply!</span>
            </div>
         </ReplyModal>

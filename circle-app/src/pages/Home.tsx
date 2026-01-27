@@ -7,6 +7,8 @@ import { getThreads, type Thread } from '@/services/thread-service';
 import ThreadCard from '@/components/features/ThreadCard';
 import { Loader2, AlertCircle } from "lucide-react";
 import { io } from "socket.io-client";
+import { CreatePostModal } from '@/components/features/CreatePostModal';
+
 
 const socket = io("http://localhost:3000");
 
@@ -78,15 +80,19 @@ export default function Home() {
 
         {/* Center Feed */}
         <main className="flex-1 border-zinc-800 min-h-screen">
+
+          {/* Header */}
           <header className="p-4 border-b border-zinc-800 sticky top-0 bg-[#121212]/80 backdrop-blur-md z-10">
-            <h1 className="text-xl font-bold">Home</h1>
+            <h1 className="text-xl font-bold border-b border-zinc-800 p-4">Home</h1>
+            {/* Thread Input Placeholder */}
+            <div className="p-4 border-b border-zinc-800">
+              <CreatePostModal onPostSuccess={() => window.location.reload()}>
+                <p className="text-zinc-500">What is happening?!</p>
+              </CreatePostModal>
+            </div>
           </header>
 
-          {/* Thread Input Placeholder */}
-          <div className="p-4 border-b border-zinc-800">
-            <p className="text-zinc-500">What is happening?!</p>
-          </div>
-
+          {/* Feed */}
           <div className="flex flex-col">
             {loading ? (
               <div className="flex justify-center p-10">

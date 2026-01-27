@@ -3,10 +3,12 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import likeReducer from './slices/likeSlice';
+import authReducer from './slices/authSlice'; 
 
 export const store = configureStore({
   reducer: {
-    likes: likeReducer, // This matches the 'likes' name in your slice
+    likes: likeReducer, 
+    auth: authReducer, 
   },
 });
 

@@ -35,8 +35,8 @@ const RightBar = () => {
           <p className="text-zinc-500 text-sm">@{user?.username || "guest"}</p>
           <p className="text-sm mt-2">{user?.bio || "No bio yet."}</p>
           <div className="flex gap-4 mt-3">
-            <p className="text-xs text-zinc-400"><span className="font-bold text-white">291</span> Following</p>
-            <p className="text-xs text-zinc-400"><span className="font-bold text-white">23</span> Followers</p>
+            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.following?.length || 0}</span> Following</p>
+            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.followers?.length || 0}</span> Followers</p>
           </div>
         </div>
       </div>

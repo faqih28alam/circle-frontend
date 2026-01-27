@@ -9,6 +9,8 @@ export interface User {
   full_name: string;
   photo_profile?: string;
   bio?: string;
+  following?: number[];
+  followers?: number[];
 }
 
 export type AuthContextType = {

@@ -8,40 +8,56 @@ import { api } from "@/services/api";
 import { useState, useEffect } from "react";
 import { ReplyModal } from './ReplyModal';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleLikeRedux } from '@/store/slices/likeSlice';
+import { type RootState } from '@/store';
 
 const ThreadCard = (props: any) => {
   const navigate = useNavigate();                                     // Initialize navigation
-  const [isLiked, setIsLiked] = useState(props.isLiked);
+  const dispatch = useDispatch();                                     // Initialize the dispatcher
+
+  // Retrieve existing like state from Redux for this specific thread
+  const isLikedInRedux = useSelector((state: RootState) => state.likes.likedThreads[props.id]);
+
+  // Use Redux value if available, otherwise use props
+  const [isLiked, setIsLiked] = useState(isLikedInRedux ?? props.isLiked);
   const [likeCount, setLikeCount] = useState(props.likes_count || 0);
   
   // useEffect: Update the like state and count when props change
   useEffect(() => {
-    setIsLiked(props.isLiked);
+    setIsLiked(isLikedInRedux ?? props.isLiked);
     setLikeCount(props.likes_count || 0);
-  }, [props.isLiked, props.likes_count]);
+  }, [props.isLiked, props.likes_count, isLikedInRedux]);
   
   const handleLike = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevents clicking the like from opening the thread detail
 
+    // Update Local State (for immediate UI responsiveness)
     const previousIsLiked = isLiked;
     const previousLikeCount = likeCount;
 
-    // Optimistic Update
+    // Update State Redux (Optimistic Update)
+    dispatch(toggleLikeRedux({ threadId: props.id }));
     setIsLiked(!isLiked);
     setLikeCount((prev: number) => (isLiked ? prev - 1 : prev + 1));
 
     try {
-      // Use props.id since that is what Home.tsx passes down
-      await api.post(`/like/${props.id}`); 
-      
+
+      // Send Request to Server
+      await api.post(`/like/${props.id}`);
       // To see immediate changes, should pass a refresh function from Home.tsx
       if (props.onLikeToggle) props.onLikeToggle();
-    } catch (error) {
-      console.error("Error liking thread", error);
 
+    } catch (error) {
+
+      // Rollback on Error
+      console.error("Error liking thread", error);
+      // Rollback Redux state if the server request fails
+      dispatch(toggleLikeRedux({ threadId: props.id }));
       // Revert the optimistic update
       setIsLiked(previousIsLiked);
       setLikeCount(previousLikeCount);
+
     }
   };
 

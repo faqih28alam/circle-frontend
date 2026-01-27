@@ -43,10 +43,12 @@ export default function ThreadDetail() {
   if (!thread) return <div className="p-4 text-zinc-500 text-center">Thread not found.</div>;
 
   return (
-    <div className="min-h-screen border-x border-zinc-800 bg-black max-w-[600px] mx-auto">
+    <div className="min-h-screen border-x border-zinc-800 bg-black">
       {/* Header with Back Button */}
       <div className="p-4 flex items-center gap-6 border-b border-zinc-800 sticky top-0 bg-black/80 backdrop-blur-md z-10 text-white">
-        <ArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
+        <button onClick={() => navigate('/home')} className="hover:bg-zinc-800 p-2 rounded-full">
+          <ArrowLeft size={24} />
+        </button>
         <h1 className="text-xl font-bold">Status</h1>
       </div>
 

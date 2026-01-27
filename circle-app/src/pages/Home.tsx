@@ -5,8 +5,6 @@
 import { useState, useEffect } from "react";
 import { getThreads, type Thread } from '@/services/thread-service';
 import ThreadCard from '@/components/features/ThreadCard';
-import Sidebar from '../components/layout/Sidebar';
-import RightBar from '../components/layout/RightBar';
 import { Loader2, AlertCircle } from "lucide-react";
 import { io } from "socket.io-client";
 
@@ -73,13 +71,13 @@ export default function Home() {
     <div className="min-h-screen bg-[#121212] text-white">
       <div className="max-w-[1300px] mx-auto flex">
         
-        {/* Left Sidebar */}
-        <aside className="w-[250px] fixed h-screen border-r border-zinc-800">
+        {/* Left Sidebar Removed because already used on Main layout */}
+        {/* <aside className="w-[250px] fixed h-screen border-r border-zinc-800">
           <Sidebar />
-        </aside>
+        </aside> */}
 
         {/* Center Feed */}
-        <main className="flex-1 ml-[250px] mr-[350px] border-r border-zinc-800 min-h-screen">
+        <main className="flex-1 border-zinc-800 min-h-screen">
           <header className="p-4 border-b border-zinc-800 sticky top-0 bg-[#121212]/80 backdrop-blur-md z-10">
             <h1 className="text-xl font-bold">Home</h1>
           </header>
@@ -114,10 +112,10 @@ export default function Home() {
           </div>
         </main>
 
-        {/* Right Panel */}
-        <aside className="w-[350px] fixed right-[calc((100vw-1300px)/2)] h-screen p-4 overflow-y-auto hidden lg:block">
+        {/* Right Panel Removed because already used in Main Layout*/}
+        {/* <aside className="w-[350px] fixed right-[calc((100vw-1300px)/2)] h-screen p-4 overflow-y-auto hidden lg:block">
           <RightBar />
-        </aside>
+        </aside> */}
       </div>
     </div>
   );

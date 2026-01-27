@@ -32,8 +32,10 @@ export default function Sidebar() {
         <h1 className="text-5xl font-bold text-[#04A51E] tracking-tighter">circle</h1>
 
         <nav className="flex flex-col gap-4">
+          {/* Render navigation items */}
           {navItems.map((item) => (
             <Link
+              onClick={() => navigate(item.href)}
               key={item.name}
               to={item.href}
               className={`flex items-center gap-4 py-2 transition-colors hover:text-[#04A51E] ${
@@ -45,7 +47,7 @@ export default function Sidebar() {
             </Link>
           ))}
 
-          {/* Create Post button */}
+          {/* "Create Post" Button */}
           <CreatePostModal onPostSuccess={() => window.location.reload()}> 
               <Button className="w-full bg-[#04A51E] hover:bg-[#038a19] text-white rounded-full py-6 mt-4 text-lg font-bold cursor-pointer">
                 Create Post

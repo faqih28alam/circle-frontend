@@ -8,13 +8,14 @@ import Reset from './pages/Reset'
 import Test from './pages/Test'
 import Home from './pages/Home'
 import ThreadDetail from "./pages/ThreadDetailPage"
-
 // Components
 import Header from './components/Header';
+import MainLayout from "./components/layout/MainLayout"
 
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute' // The gatekeeper component
+import { Navigate } from "react-router-dom"
 
 //function for router
 function App() {
@@ -36,9 +37,11 @@ function App() {
 
             {/* Private Routes */}
             <Route element={<ProtectedRoute />}>
-              <Route path="/home" element={<Home />} />
-              <Route path="/thread/:id" element={<ThreadDetail />} />
-              {/* <Route path="/follows" element={<Follow />} /> */}
+              <Route element={<MainLayout />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="/thread/:id" element={<ThreadDetail />} />
+                {/* <Route path="/follows" element={<Follow />} /> */}
+              </Route>
             </Route>
 
             {/* 2. APP ROUTES (With Header) */}
@@ -53,6 +56,9 @@ function App() {
                 </>
               } 
             />
+
+            {/* Fallback */}
+            <Route path="/" element={<Navigate to="/home" />} />
             
           </Routes>
       </BrowserRouter>

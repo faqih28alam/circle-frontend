@@ -48,12 +48,13 @@ export default function Register() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
+      if (response.data?.user && response.data?.token) {
       dispatch(
         setLogin({
-          user: response.data?.user,
-          token: response.data?.token,
+          user: response.data.user,
+          token: response.data.token,
         })
-      );
+      );}
       alert("Registration Successful!");
       navigate('/login');
     } catch (error: any) {

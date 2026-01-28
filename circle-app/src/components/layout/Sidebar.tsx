@@ -5,14 +5,14 @@
 import { Home, Search, Heart, User, LogOut } from 'lucide-react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useAuth } from '@/hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { setLogout } from '@/store/slices/authSlice';
 import { CreatePostModal } from '../features/CreatePostModal';
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { logout } = useAuth();     // Destructure logout from hook
 
   const navItems = [
     { name: 'Home', icon: Home, href: '/home' },
@@ -22,7 +22,7 @@ export default function Sidebar() {
   ];
 
   const handleLogout = () => {
-    logout();
+    dispatch(setLogout());
     navigate("/login");
   };
 

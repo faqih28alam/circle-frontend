@@ -4,10 +4,10 @@
 
 // import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useAppSelector } from "@/store/hooks";
 
 export const ProtectedRoute = () => {
-  const { token } = useAuth(); //
+  const token = useAppSelector((state) => state.auth.token);
 
   // If there is no token, redirect to login
   if (!token) {

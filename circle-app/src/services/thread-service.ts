@@ -9,6 +9,7 @@ export interface Thread {
   content: string;
   image?: string;
   isLiked: boolean;
+  likes_count: number;
   likes: number;
   reply: number;
   user: {

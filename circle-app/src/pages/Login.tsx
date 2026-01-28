@@ -2,8 +2,9 @@
 // src/pages/Login.tsx
 
 import { useState } from "react"
-import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { setLogin } from "@/store/slices/authSlice";
 import axios from "axios";
 
 // shadcn/ui components
@@ -15,9 +16,10 @@ import {
 } from "@/components/ui/card";
 
 export default function Login() {
-    const { login } = useAuth();
     const navigate = useNavigate();
-    const [email, setEmail] = useState('');    
+    const dispatch = useAppDispatch();
+
+    const [ email, setEmail ] = useState('');    
     const [ password, setPassword ] = useState('');
     const [ errorMsg, setErrorMsg ] = useState('');
 
@@ -28,10 +30,15 @@ export default function Login() {
         try {
             // Connect to your backend route: http://localhost:3000/auth/login
             const response = await axios.post('http://localhost:3000/auth/login', { email, password });
+            console.log("Full Response Data:", response.data);
             // Access both token and user from the response data
-            const { token, user } = response.data;
-            // Use the actual token from your backend, Pass BOTH to the login function
-            login(token, user);
+            dispatch(
+              setLogin({
+                user: response.data?.user,
+                token: response.data?.token,
+              })
+            );
+
             alert("Login Successful!");
             // navigate("/");
             navigate("/home"); // Redirect to home/dashboard

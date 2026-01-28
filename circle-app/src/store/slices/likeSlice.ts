@@ -4,9 +4,13 @@
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-// Define the shape of your state
+interface LikeData {
+  likedByMe: boolean;
+  likesCount: number;
+}
+
 interface LikeState {
-  likedThreads: Record<number, boolean>; // Tells TS: "The keys are numbers, values are booleans"
+  likedThreads: Record<number, LikeData>;
 }
 
 const initialState: LikeState = {
@@ -17,16 +21,31 @@ const likeSlice = createSlice({
   name: 'likes',
   initialState,
   reducers: {
+    // ACTION 1: For the local user clicking the Heart icon
     toggleLikeRedux: (state, action: PayloadAction<{ threadId: number }>) => {
       const { threadId } = action.payload;
-      // Now TS knows likedThreads[threadId] is valid
-      state.likedThreads[threadId] = !state.likedThreads[threadId];
+      const thread = state.likedThreads[threadId];
+      
+      if (thread) {
+        const isNowLiked = !thread.likedByMe;
+        thread.likedByMe = isNowLiked;
+        thread.likesCount = isNowLiked ? thread.likesCount + 1 : thread.likesCount - 1;
+      }
     },
-    setInitialLikes: (state, action: PayloadAction<Record<number, boolean>>) => {
-      state.likedThreads = action.payload;
+
+    // ACTION 2: For WebSocket updates (only updates count, doesn't change your "likedByMe")
+    updateLikeCountRedux: (state, action: PayloadAction<{ threadId: number; newCount: number }>) => {
+      const { threadId, newCount } = action.payload;
+      if (state.likedThreads[threadId]) {
+        state.likedThreads[threadId].likesCount = newCount;
+      }
+    },
+
+    setInitialLikes: (state, action: PayloadAction<Record<number, LikeData>>) => {
+      state.likedThreads = { ...state.likedThreads, ...action.payload };
     }
   }
 });
 
-export const { toggleLikeRedux, setInitialLikes } = likeSlice.actions;
+export const { toggleLikeRedux, updateLikeCountRedux, setInitialLikes } = likeSlice.actions;
 export default likeSlice.reducer;

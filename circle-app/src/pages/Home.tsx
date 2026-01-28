@@ -8,12 +8,15 @@ import ThreadCard from '@/components/features/ThreadCard';
 import { Loader2, AlertCircle } from "lucide-react";
 import { io } from "socket.io-client";
 import { CreatePostModal } from '@/components/features/CreatePostModal';
+import { updateLikeCountRedux, setInitialLikes } from "@/store/slices/likeSlice";
+import { useDispatch } from 'react-redux'
 
 
 const socket = io("http://localhost:3000");
 
 export default function Home() {
   const [threads, setThreads] = useState<Thread[]>([]);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,10 +25,20 @@ export default function Home() {
     const fetchThreads = async () => {
       try {
         setLoading(true);
-        // setError(null);
         const response = await getThreads();
-        setThreads(response || []);}
-        catch (err) {
+        const data = response || [];
+        setThreads(data);
+
+        // SYNC REDUX: Map threads to the format expected by your slice
+        const initialLikesMap: Record<number, { likedByMe: boolean; likesCount: number }> = {};
+        data.forEach((thread: Thread) => {
+          initialLikesMap[thread.id] = {
+            likedByMe: thread.isLiked,    // Backend field
+            likesCount: thread.likes_count // Backend field
+          };
+        });
+        dispatch(setInitialLikes(initialLikesMap));
+      } catch (err) {
           console.error("Error fetching threads", err);
           setError("Could not load threads. Check your connection.");
         } finally {
@@ -53,6 +66,7 @@ export default function Home() {
   // Effect 3: Real-time Socket Listeners -> Update Like
   useEffect(() => {
     const handleUpdateLike = (data: { threadId: number; newLikeCount: number }) => {
+      // Update local React state
       setThreads((prevThreads) =>
         prevThreads.map((thread) =>
           thread.id === data.threadId 
@@ -60,14 +74,19 @@ export default function Home() {
             : thread
         )
       );
+      // Update Redux state via WebSocket
+      dispatch(updateLikeCountRedux({
+        threadId: data.threadId, 
+        newCount: data.newLikeCount 
+      }));
     };
 
-  socket.on("updateLike", handleUpdateLike);
+    socket.on("updateLike", handleUpdateLike);
 
     return () => {
       socket.off("updateLike", handleUpdateLike);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen bg-[#121212] text-white">

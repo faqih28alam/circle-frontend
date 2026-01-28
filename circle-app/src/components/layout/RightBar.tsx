@@ -4,12 +4,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useAuth } from '@/hooks/useAuth';
+import { useAppSelector } from "@/store/hooks";
 import { GithubIcon, LinkedinIcon } from 'lucide-react';
 
 const RightBar = () => {
 
-  const { user } = useAuth();
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <div className="flex flex-col gap-4">
@@ -42,8 +42,8 @@ const RightBar = () => {
           <p className="text-zinc-500 text-sm">@{user?.username || "guest"}</p>
           <p className="text-sm mt-2">{user?.bio || "No bio yet."}</p>
           <div className="flex gap-4 mt-3">
-            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.following?.length || 0}</span> Following</p>
-            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.followers?.length || 0}</span> Followers</p>
+            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.following || 0}</span> Following</p>
+            <p className="text-xs text-zinc-400"><span className="font-bold text-white">{user?.followers || 0}</span> Followers</p>
           </div>
         </div>
       </div>

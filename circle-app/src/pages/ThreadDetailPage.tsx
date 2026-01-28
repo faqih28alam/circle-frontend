@@ -9,10 +9,14 @@ import { api } from "@/services/api";
 import ThreadCard from "@/components/features/ThreadCard";
 import { ReplyModal } from "@/components/features/ReplyModal";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useAuth } from '@/hooks/useAuth';
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { setInitialLikes } from "@/store/slices/likeSlice";
+// import axios from "axios";
 
 export default function ThreadDetail() {
-  const { user } = useAuth();
+
+  const dispatch = useAppDispatch(); // Disptach is for updating redux state
+  const user = useAppSelector((state) => state.auth.user); //useAppSelector is for accessing redux state
   const { id } = useParams();
   const navigate = useNavigate();
   const [thread, setThread] = useState<any>(null);
@@ -23,8 +27,17 @@ export default function ThreadDetail() {
     try {
       // Request 1: Get Thread Detail
       const threadRes = await api.get(`/thread/${id}`);
-      setThread(threadRes.data.data);
-
+      const threadData = threadRes.data.data;
+      setThread(threadData);
+      dispatch(
+        setInitialLikes({
+          [threadData.id]: {
+            likedByMe: threadData.isLiked,    
+            likesCount: threadData.likes_count 
+          },
+          
+        })
+      );
       // Request 2: Get Replies
       const repliesRes = await api.get(`/thread/${id}/replies`);
       setReplies(repliesRes.data.data.replies);

@@ -5,15 +5,12 @@ import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Forgot from './pages/Forgot'
 import Reset from './pages/Reset'
-import Test from './pages/Test'
 import Home from './pages/Home'
 import ThreadDetail from "./pages/ThreadDetailPage"
 // Components
-import Header from './components/Header';
 import MainLayout from "./components/layout/MainLayout"
 
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthProvider'
 import ProtectedRoute from './components/ProtectedRoute' // The gatekeeper component
 import { Navigate } from "react-router-dom"
 
@@ -21,48 +18,33 @@ import { Navigate } from "react-router-dom"
 function App() {
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-          <Routes>
+    <BrowserRouter>
+        <Routes>
 
-            {/* AUTH ROUTES (No Header) */}
+          {/* AUTH ROUTES (No Header) */}
 
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot" element={<Forgot />} />
-            <Route path="/reset" element={<Reset />} />
-            <Route path="/test" element={<Test />} />
-            
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/reset" element={<Reset />} />
+          {/* <Route path="/test" element={<Test />} /> */}
+          
 
-            {/* Private Routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route element={<MainLayout />}>
-                <Route path="/home" element={<Home />} />
-                <Route path="/thread/:id" element={<ThreadDetail />} />
-                {/* <Route path="/follows" element={<Follow />} /> */}
-              </Route>
+          {/* Private Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<MainLayout />}>
+              <Route path="/home" element={<Home />} />
+              <Route path="/thread/:id" element={<ThreadDetail />} />
+              {/* <Route path="/follows" element={<Follow />} /> */}
             </Route>
+          </Route>
 
-            {/* 2. APP ROUTES (With Header) */}
-            <Route 
-              path="/" 
-              element={
-                <>
-                  <Header />
-                  <div className="flex flex-col items-center justify-center min-h-[80vh] text-white">
-                    <h1 className="text-4xl font-bold">Welcome to Circle</h1>
-                  </div>
-                </>
-              } 
-            />
-
-            {/* Fallback */}
-            <Route path="/" element={<Navigate to="/home" />} />
-            
-          </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+          {/* Fallback */}
+          <Route path="/" element={<Navigate to="/home" />} />
+          
+        </Routes>
+    </BrowserRouter>
   )
 }
 

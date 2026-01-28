@@ -4,7 +4,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useAppDispatch } from "@/store/hooks";
+import { setLogin } from "@/store/slices/authSlice";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState({ 
     username: '',
     full_name: '', 
@@ -21,8 +25,7 @@ export default function Register() {
     photo_profile: null as File | null,
     bio: '' 
   });
-  const { login } = useAuth();
-  const navigate = useNavigate();
+
   const [ errorMsg, setErrorMsg ] = useState('');
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -45,7 +48,12 @@ export default function Register() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      login(response.data.token);
+      dispatch(
+        setLogin({
+          user: response.data.data.user,
+          token: response.data.token,
+        })
+      );
       alert("Registration Successful!");
       navigate('/login');
     } catch (error: any) {

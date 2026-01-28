@@ -1,82 +1,82 @@
-// src/pages/Home.tsx
-import { useState, useEffect } from "react";
-import { getThreads } from '@/services/thread-service';
-import ThreadCard from '@/components/features/ThreadCard';
-import Sidebar from '../components/layout/Sidebar';
-import RightBar from '../components/layout/RightBar';
-import { Loader2, AlertCircle } from "lucide-react"; // Added AlertCircle icon
+// // src/pages/Home.tsx
+// import { useState, useEffect } from "react";
+// import { getThreads } from '@/services/thread-service';
+// import ThreadCard from '@/components/features/ThreadCard';
+// import Sidebar from '../components/layout/Sidebar';
+// import RightBar from '../components/layout/RightBar';
+// import { Loader2, AlertCircle } from "lucide-react"; // Added AlertCircle icon
 
-export default function Home() {
-  const [threads, setThreads] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+// export default function Home() {
+//   const [threads, setThreads] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchThreads = async () => {
-      try {
-        setLoading(true);
-        setError(null); // Clear previous errors
-        const response = await getThreads(); //
-        setThreads(response?.data?.threads || []);
-      } catch (err) {
-        console.error("Error fetching threads", err);
-        setError("Could not load threads. Check your connection."); // Update error state
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchThreads();
-  }, []);
+//   useEffect(() => {
+//     const fetchThreads = async () => {
+//       try {
+//         setLoading(true);
+//         setError(null); // Clear previous errors
+//         const response = await getThreads(); //
+//         setThreads(response?.data?.threads || []);
+//       } catch (err) {
+//         console.error("Error fetching threads", err);
+//         setError("Could not load threads. Check your connection."); // Update error state
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchThreads();
+//   }, []);
 
-  return (
-    <div className="min-h-screen bg-[#121212] text-white">
-      <div className="max-w-[1300px] mx-auto flex">
+//   return (
+//     <div className="min-h-screen bg-[#121212] text-white">
+//       <div className="max-w-[1300px] mx-auto flex">
         
-        {/* Left Sidebar */}
-        <aside className="w-[250px] fixed h-screen border-r border-zinc-800">
-          <Sidebar />
-        </aside>
+//         {/* Left Sidebar */}
+//         <aside className="w-[250px] fixed h-screen border-r border-zinc-800">
+//           <Sidebar />
+//         </aside>
 
-        {/* Center Feed */}
-        <main className="flex-1 ml-[250px] mr-[350px] border-r border-zinc-800 min-h-screen">
-          <header className="p-4 border-b border-zinc-800 sticky top-0 bg-[#121212]/80 backdrop-blur-md z-10">
-            <h1 className="text-xl font-bold">Home</h1>
-          </header>
+//         {/* Center Feed */}
+//         <main className="flex-1 ml-[250px] mr-[350px] border-r border-zinc-800 min-h-screen">
+//           <header className="p-4 border-b border-zinc-800 sticky top-0 bg-[#121212]/80 backdrop-blur-md z-10">
+//             <h1 className="text-xl font-bold">Home</h1>
+//           </header>
 
-          <div className="p-4 border-b border-zinc-800">
-            <p className="text-zinc-500">What is happening?!</p>
-          </div>
+//           <div className="p-4 border-b border-zinc-800">
+//             <p className="text-zinc-500">What is happening?!</p>
+//           </div>
 
-          <div className="flex flex-col">
-            {loading ? (
-              <div className="flex justify-center p-10">
-                <Loader2 className="h-8 w-8 animate-spin text-[#04A51E]" />
-              </div>
-            ) : error ? (
-              /* --- ADDED ERROR DISPLAY --- */
-              <div className="flex flex-col items-center justify-center p-10 text-zinc-500">
-                <AlertCircle className="h-10 w-10 text-red-500 mb-2" />
-                <p>{error}</p>
-                <button 
-                  onClick={() => window.location.reload()} 
-                  className="mt-4 text-[#04A51E] hover:underline"
-                >
-                  Try Again
-                </button>
-              </div>
-            ) : (
-              threads.map((thread: any) => (
-                <ThreadCard key={thread.id} {...thread} />
-              ))
-            )}
-          </div>
-        </main>
+//           <div className="flex flex-col">
+//             {loading ? (
+//               <div className="flex justify-center p-10">
+//                 <Loader2 className="h-8 w-8 animate-spin text-[#04A51E]" />
+//               </div>
+//             ) : error ? (
+//               /* --- ADDED ERROR DISPLAY --- */
+//               <div className="flex flex-col items-center justify-center p-10 text-zinc-500">
+//                 <AlertCircle className="h-10 w-10 text-red-500 mb-2" />
+//                 <p>{error}</p>
+//                 <button 
+//                   onClick={() => window.location.reload()} 
+//                   className="mt-4 text-[#04A51E] hover:underline"
+//                 >
+//                   Try Again
+//                 </button>
+//               </div>
+//             ) : (
+//               threads.map((thread: any) => (
+//                 <ThreadCard key={thread.id} {...thread} />
+//               ))
+//             )}
+//           </div>
+//         </main>
 
-        {/* Right Panel */}
-        <aside className="w-[350px] fixed right-[calc((100vw-1300px)/2)] h-screen p-4 overflow-y-auto hidden lg:block">
-          <RightBar />
-        </aside>
-      </div>
-    </div>
-  );
-}
+//         {/* Right Panel */}
+//         <aside className="w-[350px] fixed right-[calc((100vw-1300px)/2)] h-screen p-4 overflow-y-auto hidden lg:block">
+//           <RightBar />
+//         </aside>
+//       </div>
+//     </div>
+//   );
+// }

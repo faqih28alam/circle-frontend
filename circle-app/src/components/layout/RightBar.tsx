@@ -75,7 +75,7 @@ const RightBar = () => {
             <DialogTrigger asChild>
               <Button 
                 variant="outline" 
-                className="rounded-full text-white border-zinc-700 bg-transparent absolute -bottom-10 right-4 hover:bg-white hover:text-black transition-all"
+                className="rounded-full text-black border-zinc-700 bg-white absolute -bottom-10 right-4 hover:bg-black hover:text-white hover:border-lime-500 hover:border-3 cursor-pointer transition-all"
               >
                 Edit Profile
               </Button>

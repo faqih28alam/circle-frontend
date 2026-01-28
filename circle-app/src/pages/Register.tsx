@@ -50,8 +50,8 @@ export default function Register() {
 
       dispatch(
         setLogin({
-          user: response.data.data.user,
-          token: response.data.token,
+          user: response.data?.user,
+          token: response.data?.token,
         })
       );
       alert("Registration Successful!");

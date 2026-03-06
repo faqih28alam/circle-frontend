@@ -4,7 +4,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "@/lib/api";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -28,10 +28,10 @@ export default function Reset() {
 
         try {
             // Replace with your actual password reset endpoint logic
-            await axios.post('http://localhost:3000/auth/reset', { password });
+            await api.post('/reset', { password });
 
             alert("Password reset successful!");
-            navigate("/login"); 
+            navigate("/login");
         } catch (error: any) {
             console.error("Reset failed", error);
             setErrorMsg(error.response?.data?.message || 'Failed to reset password');
@@ -51,28 +51,28 @@ export default function Reset() {
                     <h2 className="text-white text-3xl font-bold tracking-tight mb-6">
                         Reset Password
                     </h2>
-                    
+
                     <form onSubmit={handleReset} className="space-y-4">
-                        <Input 
-                            type="password" 
-                            placeholder="New Password" 
+                        <Input
+                            type="password"
+                            placeholder="New Password"
                             className="bg-[#121212] border-zinc-700 text-white h-12 focus-visible:ring-[#04A51E]"
-                            value={password} 
-                            onChange={(e) => setPassword(e.target.value)} 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
-                        <Input 
-                            type="password" 
-                            placeholder="Confirm New Password" 
+                        <Input
+                            type="password"
+                            placeholder="Confirm New Password"
                             className="bg-[#121212] border-zinc-700 text-white h-12 focus-visible:ring-[#04A51E]"
-                            value={confirmPassword} 
-                            onChange={(e) => setConfirmPassword(e.target.value)} 
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             required
                         />
 
                         {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
-                        
-                        <Button 
+
+                        <Button
                             type="submit"
                             className="w-full bg-[#04A51E] hover:bg-[#038b18] text-black rounded-full h-12 text-lg font-bold mt-2"
                         >
@@ -82,8 +82,8 @@ export default function Reset() {
 
                     <p className="text-zinc-400 text-sm mt-6">
                         Back to{" "}
-                        <span 
-                            className="text-[#04A51E] cursor-pointer hover:underline" 
+                        <span
+                            className="text-[#04A51E] cursor-pointer hover:underline"
                             onClick={() => navigate('/login')}
                         >
                             Login

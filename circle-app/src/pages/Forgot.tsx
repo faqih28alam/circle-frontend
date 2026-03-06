@@ -4,7 +4,7 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "@/lib/api";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -22,10 +22,10 @@ export default function Forgot() {
 
         try {
             // Connect to your backend route
-            await axios.post('http://localhost:3000/auth/forgot', { email });
+            await api.post('/forgot', { email });
 
             alert("If an account exists, a reset link has been sent!");
-            navigate("/login"); 
+            navigate("/login");
 
         } catch (error: any) {
             console.error("Forgot password request failed", error);
@@ -51,18 +51,18 @@ export default function Forgot() {
                     </p>
 
                     <form onSubmit={handleForgot} className="space-y-4">
-                        <Input 
-                            type="email" 
-                            placeholder="Email" 
+                        <Input
+                            type="email"
+                            placeholder="Email"
                             className="bg-[#121212] border-zinc-700 text-white h-12 focus-visible:ring-[#04A51E]"
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
 
                         {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
-                        
-                        <Button 
+
+                        <Button
                             type="submit"
                             className="w-full bg-[#04A51E] hover:bg-[#038b18] text-black rounded-full h-12 text-lg font-bold mt-2"
                         >

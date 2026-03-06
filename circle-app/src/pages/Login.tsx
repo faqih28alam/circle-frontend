@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/store/hooks";
 import { setLogin } from "@/store/slices/authSlice";
-import axios from "axios";
+import api from "@/lib/api";
 
 // shadcn/ui components
 import { Button } from "@/components/ui/button";
@@ -16,40 +16,40 @@ import {
 } from "@/components/ui/card";
 
 export default function Login() {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-    const [ email, setEmail ] = useState('');    
-    const [ password, setPassword ] = useState('');
-    const [ errorMsg, setErrorMsg ] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-    const handleLogin = async(e: React.FormEvent) => {
-        e.preventDefault();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-        // TODO: handle login logic
-        try {
-            // Connect to your backend route: http://localhost:3000/auth/login
-            const response = await axios.post('http://localhost:3000/auth/login', { email, password });
-            console.log("Full Response Data:", response.data);
-            // Access both token and user from the response data
-            dispatch(
-              setLogin({
-                user: response.data?.user,
-                token: response.data?.token,
-              })
-            );
+    // TODO: handle login logic
+    try {
+      // Connect to your backend route: http://localhost:3000/api/login
+      const response = await api.post('/login', { email, password });
+      console.log("Full Response Data:", response.data);
+      // Access both token and user from the response data
+      dispatch(
+        setLogin({
+          user: response.data?.user,
+          token: response.data?.token,
+        })
+      );
 
-            alert("Login Successful!");
-            // navigate("/");
-            navigate("/home"); // Redirect to home/dashboard
+      alert("Login Successful!");
+      // navigate("/");
+      navigate("/home"); // Redirect to home/dashboard
 
-        } catch (error:any) {
-            console.error("Login failed", error);
-            setErrorMsg(error.response?.data?.message || 'Invalid email or password');
-        }
-    };
+    } catch (error: any) {
+      console.error("Login failed", error);
+      setErrorMsg(error.response?.data?.message || 'Invalid email or password');
+    }
+  };
 
-    return (
+  return (
     /* matching your Register page background and centering */
     // <div className="min-h-screen w-full bg-[#1d1d1d] flex flex-col items-center justify-center p-4">
     <div className="min-h-screen flex items-center justify-center bg-[#121212]">

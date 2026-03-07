@@ -14,6 +14,7 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card";
+import { toast } from "sonner"
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,7 +40,8 @@ export default function Login() {
         })
       );
 
-      alert("Login Successful!");
+      // alert("Login Successful!");
+      toast.success("Login Successful!", { position: "top-center" },)
       // navigate("/");
       navigate("/home"); // Redirect to home/dashboard
 

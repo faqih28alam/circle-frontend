@@ -10,40 +10,42 @@ import ThreadDetail from "./pages/ThreadDetailPage"
 // Components
 import MainLayout from "./components/layout/MainLayout"
 
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute' // The gatekeeper component
 import { Navigate } from "react-router-dom"
+import { Toaster } from "@/components/ui/sonner"
 
 //function for router
 function App() {
 
   return (
     <BrowserRouter>
-        <Routes>
+      <Routes>
 
-          {/* AUTH ROUTES (No Header) */}
+        {/* AUTH ROUTES (No Header) */}
 
-          {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot" element={<Forgot />} />
-          <Route path="/reset" element={<Reset />} />
-          {/* <Route path="/test" element={<Test />} /> */}
-          
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/reset" element={<Reset />} />
+        {/* <Route path="/test" element={<Test />} /> */}
 
-          {/* Private Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<MainLayout />}>
-              <Route path="/home" element={<Home />} />
-              <Route path="/thread/:id" element={<ThreadDetail />} />
-              {/* <Route path="/follows" element={<Follow />} /> */}
-            </Route>
+
+        {/* Private Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/thread/:id" element={<ThreadDetail />} />
+            {/* <Route path="/follows" element={<Follow />} /> */}
           </Route>
+        </Route>
 
-          {/* Fallback */}
-          <Route path="/" element={<Navigate to="/home" />} />
-          
-        </Routes>
+        {/* Fallback */}
+        <Route path="/" element={<Navigate to="/home" />} />
+
+      </Routes>
+      <Toaster richColors />
     </BrowserRouter>
   )
 }

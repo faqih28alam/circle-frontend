@@ -8,6 +8,7 @@ import Reset from './pages/Reset'
 import Home from './pages/Home'
 import ThreadDetail from "./pages/ThreadDetailPage"
 import Search from "./pages/Search"
+import Follows from "./pages/Follows"
 // Components
 import MainLayout from "./components/layout/MainLayout"
 
@@ -39,7 +40,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/thread/:id" element={<ThreadDetail />} />
             <Route path="/search" element={<Search />} />
-            {/* <Route path="/follows" element={<Follow />} /> */}
+            <Route path="/follows" element={<Follows />} />
           </Route>
         </Route>
 

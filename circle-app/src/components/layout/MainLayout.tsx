@@ -17,7 +17,7 @@ const MainLayout = () => {
       </main>
 
       {/* Right Sidebar - Fixed width */}
-      <div className="w-[400px] h-screen sticky top-0 p-4 hidden lg:block">
+      <div className="w-[400px] h-auto sticky top-0 p-4 hidden lg:block">
         <RightBar />
       </div>
     </div>

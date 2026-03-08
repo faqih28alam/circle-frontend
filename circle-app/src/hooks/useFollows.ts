@@ -50,11 +50,11 @@ export const useFollows = (tab: "followers" | "following") => {
 
         try {
             if (isCurrentlyFollowing) {
-                await axios.delete(`${API}/api/follows/${targetId}`, {
+                await axios.delete(`${API}/follows/${targetId}`, {
                     headers: { Authorization: `Bearer ${getToken()}` },
                 });
             } else {
-                await axios.post(`${API}/api/follows/${targetId}`, {}, {
+                await axios.post(`${API}/follows/${targetId}`, {}, {
                     headers: { Authorization: `Bearer ${getToken()}` },
                 });
             }

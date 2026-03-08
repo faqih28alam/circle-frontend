@@ -9,7 +9,11 @@ export interface SearchUser {
     full_name: string;
     photo_profile: string | null;
     bio: string | null;
+    isFollowing: boolean;  // 👈 added
 }
+
+const API = import.meta.env.VITE_API_URL;
+const getToken = () => localStorage.getItem("token");
 
 export const useSearchUsers = (query: string, delay: number = 400) => {
     const [results, setResults] = useState<SearchUser[]>([]);
@@ -17,7 +21,6 @@ export const useSearchUsers = (query: string, delay: number = 400) => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // If query is empty, clear results immediately — no need to wait
         if (!query.trim()) {
             setResults([]);
             setIsLoading(false);
@@ -27,19 +30,14 @@ export const useSearchUsers = (query: string, delay: number = 400) => {
         setIsLoading(true);
         setError(null);
 
-        // Debounce: wait for user to stop typing before firing the request
         const timer = setTimeout(async () => {
             try {
-                const token = localStorage.getItem("token");
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/search`,
-                    {
-                        params: { q: query },
-                        headers: { Authorization: `Bearer ${token}` },
-                    }
-                );
+                const response = await axios.get(`${API}/search`, {
+                    params: { q: query },
+                    headers: { Authorization: `Bearer ${getToken()}` },
+                });
                 setResults(response.data.data);
-            } catch (err) {
+            } catch {
                 setError("Something went wrong. Please try again.");
                 setResults([]);
             } finally {
@@ -47,9 +45,37 @@ export const useSearchUsers = (query: string, delay: number = 400) => {
             }
         }, delay);
 
-        // Cleanup: cancel the previous timer if user keeps typing
         return () => clearTimeout(timer);
     }, [query, delay]);
 
-    return { results, isLoading, error };
+    // Optimistic follow toggle — same pattern as useFollows
+    const toggleFollow = async (targetId: number, isCurrentlyFollowing: boolean) => {
+        // Update UI instantly
+        setResults((prev) =>
+            prev.map((u) =>
+                u.id === targetId ? { ...u, isFollowing: !isCurrentlyFollowing } : u
+            )
+        );
+
+        try {
+            if (isCurrentlyFollowing) {
+                await axios.delete(`${API}/follows/${targetId}`, {
+                    headers: { Authorization: `Bearer ${getToken()}` },
+                });
+            } else {
+                await axios.post(`${API}/follows/${targetId}`, {}, {
+                    headers: { Authorization: `Bearer ${getToken()}` },
+                });
+            }
+        } catch {
+            // Revert if request fails
+            setResults((prev) =>
+                prev.map((u) =>
+                    u.id === targetId ? { ...u, isFollowing: isCurrentlyFollowing } : u
+                )
+            );
+        }
+    };
+
+    return { results, isLoading, error, toggleFollow };
 };

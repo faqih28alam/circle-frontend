@@ -1,6 +1,8 @@
 # ⭕ Stage 2 Circle App - FrontEnd
 This is the core API for **Circle**, a high-performance social media platform inspired by Threads and Twitter. It handles user authentication, thread management, and real-time social interactions. 
 
+![CircleApp-Preview](https://github.com/user-attachments/assets/6179f91b-5a40-49cf-a7c2-2f4eab36bce3)
+
 ## 🛠️ Tech Stack
 * **Framework:** React 18 (Vite)
 * **Language:** TypeScript

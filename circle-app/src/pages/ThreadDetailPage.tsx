@@ -75,7 +75,7 @@ export default function ThreadDetail() {
             {/* Dynamic User Profile Picture */}
             <Avatar className="">
               <AvatarImage
-                src={`${import.meta.env.VITE_URL_AVATAR}/${user?.photo_profile}`} />
+                src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} />
               <AvatarFallback>{user?.full_name?.[0] || '?'}</AvatarFallback>
             </Avatar>
 
@@ -91,7 +91,7 @@ export default function ThreadDetail() {
             <div className="flex gap-3">
               <div className="w-10 h-10 rounded-full bg-zinc-700 overflow-hidden">
                 {reply.author?.photo_profile && (
-                  <img src={`${import.meta.env.VITE_URL_AVATAR}/${reply.author.photo_profile}`} alt="avatar" />
+                  <img src={`${import.meta.env.VITE_IMG_URL}/uploads/${reply.author.photo_profile}`} alt="avatar" />
                 )}
               </div>
               <div className="flex-1">

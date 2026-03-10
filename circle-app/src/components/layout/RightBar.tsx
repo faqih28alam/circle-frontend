@@ -146,7 +146,7 @@ const RightBar = () => {
             alt="cover"
           />
           <Avatar className="absolute -bottom-10 left-4 w-20 h-20 border-4 border-[#1A1A1A]">
-            <AvatarImage src={`${import.meta.env.VITE_URL_AVATAR}/${user?.photo_profile}`} />
+            <AvatarImage src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} />
             <AvatarFallback>{user?.full_name?.[0] || "?"}</AvatarFallback>
           </Avatar>
 
@@ -237,7 +237,7 @@ const RightBar = () => {
                     <AvatarImage
                       src={
                         suggestedUser.photo_profile
-                          ? `${import.meta.env.VITE_URL_AVATAR}/${suggestedUser.photo_profile}`
+                          ? `${import.meta.env.VITE_IMG_URL}/uploads/${suggestedUser.photo_profile}`
                           : undefined
                       }
                     />

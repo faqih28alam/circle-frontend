@@ -17,6 +17,14 @@ const ThreadCard = (props: any) => {
 
   // SELECT: Listen to the Redux store for this specific thread
   const isLikedInRedux = useSelector((state: RootState) => state.likes.likedThreads[props.id]);
+  // SELECT: Listen to the Redux store 
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+
+  // If the thread author is the logged-in user, use Redux photo (always fresh)
+  // Otherwise use the author's photo from the API
+  const avatarSrc = props.author?.id === currentUser?.id
+    ? `${import.meta.env.VITE_IMG_URL}/uploads/${currentUser?.photo_profile}`
+    : `${import.meta.env.VITE_IMG_URL}/uploads/${props.author?.photo_profile}`;
 
   // DERIVE VALUES (No useState needed for these!)
   // Fallback to props only if Redux hasn't been initialized for this thread yet
@@ -58,7 +66,7 @@ const ThreadCard = (props: any) => {
       <div className="flex gap-3">
         {/* Show the author's profile picture */}
         <Avatar className="h-10 w-10" onClick={(e) => e.stopPropagation()}>
-          <AvatarImage src={`${import.meta.env.VITE_URL_AVATAR}/${props.author?.photo_profile}`} />
+          <AvatarImage src={avatarSrc} />
           <AvatarFallback>{props.author?.full_name?.[0]}</AvatarFallback>
         </Avatar>
 

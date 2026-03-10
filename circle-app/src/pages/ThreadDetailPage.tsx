@@ -32,10 +32,10 @@ export default function ThreadDetail() {
       dispatch(
         setInitialLikes({
           [threadData.id]: {
-            likedByMe: threadData.isLiked,    
-            likesCount: threadData.likes_count 
+            likedByMe: threadData.isLiked,
+            likesCount: threadData.likes_count
           },
-          
+
         })
       );
       // Request 2: Get Replies
@@ -71,16 +71,16 @@ export default function ThreadDetail() {
       {/* Reply Input Trigger */}
       <div className="p-4 border-b border-zinc-800">
         <ReplyModal threadId={Number(id)} onSuccess={fetchData}>
-           <div className="flex items-center gap-3 cursor-pointer">
-              {/* Dynamic User Profile Picture */}
-              <Avatar className="">
-                <AvatarImage 
+          <div className="flex items-center gap-3 cursor-pointer">
+            {/* Dynamic User Profile Picture */}
+            <Avatar className="">
+              <AvatarImage
                 src={`${import.meta.env.VITE_URL_AVATAR}/${user?.photo_profile}`} />
-                <AvatarFallback>{user?.full_name?.[0] || '?'}</AvatarFallback>
-              </Avatar>
+              <AvatarFallback>{user?.full_name?.[0] || '?'}</AvatarFallback>
+            </Avatar>
 
-              <span className="text-zinc-500">Type your reply!</span>
-           </div>
+            <span className="text-zinc-500">Type your reply!</span>
+          </div>
         </ReplyModal>
       </div>
 
@@ -101,10 +101,10 @@ export default function ThreadDetail() {
                 </div>
                 <p className="mt-1 text-sm text-zinc-200">{reply.content}</p>
                 {reply.image && (
-                   <img 
-                    src={`${import.meta.env.VITE_URL_AVATAR}/${reply.image}`} 
-                    className="mt-3 rounded-xl border border-zinc-800 max-h-80 object-cover" 
-                   />
+                  <img
+                    src={`${import.meta.env.VITE_IMG_UR}/uploads/${reply.image}`}
+                    className="mt-3 rounded-xl border border-zinc-800 max-h-80 object-cover"
+                  />
                 )}
               </div>
             </div>

@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import ThreadDetail from "./pages/ThreadDetailPage"
 import Search from "./pages/Search"
 import Follows from "./pages/Follows"
+import Profile from "./pages/Profile"
 // Components
 import MainLayout from "./components/layout/MainLayout"
 
@@ -41,6 +42,8 @@ function App() {
             <Route path="/thread/:id" element={<ThreadDetail />} />
             <Route path="/search" element={<Search />} />
             <Route path="/follows" element={<Follows />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:username" element={<Profile />} />
           </Route>
         </Route>
 

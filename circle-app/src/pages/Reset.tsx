@@ -44,7 +44,8 @@ export default function Reset() {
                 <CardContent className="pt-6">
                     {/* Logo */}
                     <div className="flex justify-start mb-2">
-                        <img src="./src/assets/images/circle app.png" alt="circle" className="h-10 w-auto" />
+                        {/* <img src="./src/assets/images/circle app.png" alt="circle" className="h-10 w-auto" /> */}
+                        <h1 className="text-5xl font-bold text-[#04A51E] tracking-tighter">Circle</h1>
                     </div>
 
                     {/* Reset Password Form */}

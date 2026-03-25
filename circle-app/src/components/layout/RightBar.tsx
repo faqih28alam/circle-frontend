@@ -146,7 +146,8 @@ const RightBar = () => {
             alt="cover"
           />
           <Avatar className="absolute -bottom-10 left-4 w-20 h-20 border-4 border-[#1A1A1A]">
-            <AvatarImage src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} />
+            {/* <AvatarImage src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} /> */}
+            <AvatarImage src={user?.photo_profile ?? undefined} />
             <AvatarFallback>{user?.full_name?.[0] || "?"}</AvatarFallback>
           </Avatar>
 
@@ -234,13 +235,14 @@ const RightBar = () => {
               <div key={suggestedUser.id} className="flex justify-between items-center">
                 <div className="flex gap-3 items-center">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage
+                    {/* <AvatarImage
                       src={
                         suggestedUser.photo_profile
                           ? `${import.meta.env.VITE_IMG_URL}/uploads/${suggestedUser.photo_profile}`
                           : undefined
                       }
-                    />
+                    /> */}
+                    <AvatarImage src={suggestedUser.photo_profile ?? undefined} />
                     <AvatarFallback>{suggestedUser.full_name[0]}</AvatarFallback>
                   </Avatar>
                   <div>

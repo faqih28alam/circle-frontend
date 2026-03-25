@@ -65,11 +65,12 @@ export default function Search() {
                         <div className="flex items-center gap-3">
                             <Avatar className="w-10 h-10">
                                 <AvatarImage
-                                    src={
-                                        user.photo_profile
-                                            ? `${import.meta.env.VITE_API_URL}/uploads/${user.photo_profile}`
-                                            : undefined
-                                    }
+                                    // src={
+                                    //     user.photo_profile
+                                    //         ? `${import.meta.env.VITE_API_URL}/uploads/${user.photo_profile}`
+                                    //         : undefined
+                                    // }
+                                    src={user.photo_profile ?? undefined}
                                 />
                                 <AvatarFallback className="bg-zinc-800 text-white text-sm">
                                     {user.full_name.charAt(0).toUpperCase()}

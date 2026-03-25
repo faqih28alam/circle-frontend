@@ -22,9 +22,12 @@ const ThreadCard = (props: any) => {
 
   // If the thread author is the logged-in user, use Redux photo (always fresh)
   // Otherwise use the author's photo from the API
+  // const avatarSrc = props.author?.id === currentUser?.id
+  //   ? `${import.meta.env.VITE_IMG_URL}/uploads/${currentUser?.photo_profile}`
+  //   : `${import.meta.env.VITE_IMG_URL}/uploads/${props.author?.photo_profile}`;
   const avatarSrc = props.author?.id === currentUser?.id
-    ? `${import.meta.env.VITE_IMG_URL}/uploads/${currentUser?.photo_profile}`
-    : `${import.meta.env.VITE_IMG_URL}/uploads/${props.author?.photo_profile}`;
+    ? currentUser?.photo_profile ?? undefined
+    : props.author?.photo_profile ?? undefined
 
   // DERIVE VALUES (No useState needed for these!)
   // Fallback to props only if Redux hasn't been initialized for this thread yet
@@ -85,7 +88,8 @@ const ThreadCard = (props: any) => {
           {props.image && (
             <div className="mt-3 rounded-xl overflow-hidden border border-zinc-800">
               <img
-                src={`${import.meta.env.VITE_IMG_URL}/uploads/${props.image}`}
+                // src={`${import.meta.env.VITE_IMG_URL}/uploads/${props.image}`}
+                src={props.image}
                 alt="post content"
                 className="w-full h-auto max-h-[400px] object-cover"
               />

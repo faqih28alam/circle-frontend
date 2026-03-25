@@ -99,7 +99,8 @@ export default function Profile() {
                                     className="aspect-square overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
                                 >
                                     <img
-                                        src={`${import.meta.env.VITE_IMG_URL}/uploads/${thread.image}`}
+                                        // src={`${import.meta.env.VITE_IMG_URL}/uploads/${thread.image}`}
+                                        src={thread.image ?? undefined}
                                         alt="media"
                                         className="w-full h-full object-cover"
                                     />

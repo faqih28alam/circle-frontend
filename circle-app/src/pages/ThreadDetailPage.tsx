@@ -74,8 +74,9 @@ export default function ThreadDetail() {
           <div className="flex items-center gap-3 cursor-pointer">
             {/* Dynamic User Profile Picture */}
             <Avatar className="">
-              <AvatarImage
-                src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} />
+              {/* <AvatarImage
+                src={`${import.meta.env.VITE_IMG_URL}/uploads/${user?.photo_profile}`} /> */}
+              <AvatarImage src={user?.photo_profile ?? undefined} />
               <AvatarFallback>{user?.full_name?.[0] || '?'}</AvatarFallback>
             </Avatar>
 
@@ -91,7 +92,10 @@ export default function ThreadDetail() {
             <div className="flex gap-3">
               <div className="w-10 h-10 rounded-full bg-zinc-700 overflow-hidden">
                 {reply.author?.photo_profile && (
-                  <img src={`${import.meta.env.VITE_IMG_URL}/uploads/${reply.author.photo_profile}`} alt="avatar" />
+                  <img
+                    // src={`${import.meta.env.VITE_IMG_URL}/uploads/${reply.author.photo_profile}`} 
+                    src={reply.author.photo_profile ?? undefined}
+                    alt="avatar" />
                 )}
               </div>
               <div className="flex-1">
@@ -102,7 +106,8 @@ export default function ThreadDetail() {
                 <p className="mt-1 text-sm text-zinc-200">{reply.content}</p>
                 {reply.image && (
                   <img
-                    src={`${import.meta.env.VITE_IMG_UR}/uploads/${reply.image}`}
+                    // src={`${import.meta.env.VITE_IMG_UR}/uploads/${reply.image}`}
+                    src={reply.image}
                     className="mt-3 rounded-xl border border-zinc-800 max-h-80 object-cover"
                   />
                 )}

@@ -22,13 +22,14 @@ export default function UserProfile({ profile, onToggleFollow }: UserProfileProp
 
                 {/* Avatar */}
                 <Avatar className="absolute -bottom-8 left-4 w-16 h-16 border-4 border-black">
-                    <AvatarImage
+                    {/* <AvatarImage
                         src={
                             profile.photo_profile
                                 ? `${import.meta.env.VITE_IMG_URL}/uploads/${profile.photo_profile}`
                                 : undefined
                         }
-                    />
+                    /> */}
+                    <AvatarImage src={profile.photo_profile ?? undefined} />
                     <AvatarFallback className="bg-zinc-700 text-white text-xl font-bold">
                         {profile.full_name?.charAt(0).toUpperCase()}
                     </AvatarFallback>

@@ -26,11 +26,12 @@ function UserRow({
             <div className="flex items-center gap-3">
                 <Avatar className="w-11 h-11">
                     <AvatarImage
-                        src={
-                            user.photo_profile
-                                ? `${import.meta.env.VITE_API_URL}/uploads/${user.photo_profile}`
-                                : undefined
-                        }
+                        // src={
+                        //     user.photo_profile
+                        //         ? `${import.meta.env.VITE_API_URL}/uploads/${user.photo_profile}`
+                        //         : undefined
+                        // }
+                        src={user.photo_profile ?? undefined}
                     />
                     <AvatarFallback className="bg-zinc-800 text-white text-sm font-bold">
                         {user.full_name?.charAt(0).toUpperCase() ?? "?"}

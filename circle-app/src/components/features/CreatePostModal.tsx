@@ -59,8 +59,8 @@ export function CreatePostModal({ children, onPostSuccess }: { children: React.R
           <DialogTitle>Create Post</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-4 mt-4">
-          <Textarea 
-            placeholder="What is happening?!" 
+          <Textarea
+            placeholder="What is happening?!"
             className="bg-transparent border-none focus-visible:ring-0 text-lg resize-none min-h-[150px]"
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -69,7 +69,7 @@ export function CreatePostModal({ children, onPostSuccess }: { children: React.R
           {/* Image Preview Area */}
           {preview && (
             <div className="relative mt-2 rounded-xl overflow-hidden border border-zinc-800">
-              <button 
+              <button
                 onClick={() => setImage(null)}
                 className="absolute top-2 right-2 p-1 bg-black/50 rounded-full hover:bg-black/70 transition-colors"
               >
@@ -84,16 +84,16 @@ export function CreatePostModal({ children, onPostSuccess }: { children: React.R
           <div className="flex justify-between items-center">
             <label className="cursor-pointer text-[#04A51E] hover:opacity-80">
               <ImagePlus size={24} />
-              <input 
-                type="file" 
-                className="hidden" 
+              <input
+                type="file"
+                className="hidden"
                 accept="image/*"
                 onChange={(e) => setImage(e.target.files?.[0] || null)}
               />
             </label>
 
             {/* Post Button */}
-            <Button 
+            <Button
               onClick={handlePost}
               disabled={loading || (!content.trim() && !image)}
               className="bg-[#04A51E] hover:bg-[#038a19] rounded-full px-6 font-bold"
